@@ -28,7 +28,7 @@ public class UseCaseConfig {
     }
 
     @Bean
-    ServiceProviderGetByIdUseCase bookGetByIdUseCase(final ServiceProviderGateway serviceProviderGateway) {
+    ServiceProviderGetByIdUseCase serviceProviderGetByIdUseCase(final ServiceProviderGateway serviceProviderGateway) {
         return new ServiceProviderGetByIdUseCase(serviceProviderGateway);
     }
 

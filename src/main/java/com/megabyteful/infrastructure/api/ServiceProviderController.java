@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.megabyteful.api.ServiceProviderApi;
 import com.megabyteful.application.usecase.ServiceProviderCreateUseCase;
-import com.megabyteful.application.usecase.ServiceProviderCreateUseCase.Output;
 import com.megabyteful.application.usecase.ServiceProviderDeleteUseCase;
 import com.megabyteful.application.usecase.ServiceProviderGetByIdUseCase;
+import com.megabyteful.application.usecase.ServiceProviderGetByIdUseCase.Output;
 import com.megabyteful.application.usecase.ServiceProviderUpdateUseCase;
 import com.megabyteful.model.CreateServiceProviderDTO;
 import com.megabyteful.model.ServiceProviderDTO;
@@ -26,10 +26,10 @@ public class ServiceProviderController implements ServiceProviderApi {
 	private final ServiceProviderCreateUseCase serviceProviderCreateUseCase;
 	@NonNull
 	private final ServiceProviderDeleteUseCase serviceProviderDeleteUseCase;
-//	@NonNull
-//	private final ServiceProviderGetByIdUseCase serviceProviderGetByIdUseCase;
-//	@NonNull
-//	private final ServiceProviderUpdateUseCase serviceProviderUpdateUseCase;
+	@NonNull
+	private final ServiceProviderGetByIdUseCase serviceProviderGetByIdUseCase;
+	@NonNull
+	private final ServiceProviderUpdateUseCase serviceProviderUpdateUseCase;
 
 	@Override
 	public ResponseEntity<ServiceProviderDTO> createServiceProvider(final CreateServiceProviderDTO body) {
@@ -51,24 +51,24 @@ public class ServiceProviderController implements ServiceProviderApi {
 	}
 
 	
-//	@Override
-//	public ResponseEntity<ServiceProviderDTO> getServiceProviderById(final Long id) {
-//		Output output = serviceProviderGetByIdUseCase.execute(id);
-//		final var response = new ServiceProviderDTO().id(output.id()).name(output.name()).document(output.document())
-//				.phone(output.phone()).beautyServices(output.beautyServices()).address(output.address())
-//				.email(output.email());
-//		return ResponseEntity.ok(response);
-//	}
-//
-//	@Override
-//	public ResponseEntity<ServiceProviderDTO> updateBookById(final Long id, final UpdateServiceProviderDTO body) {
-//		final var input = new ServiceProviderUpdateUseCase.Input(id, body.getName(), body.getDocument(),
-//				body.getPhone(), body.getBeautyServices(), body.getAddress(), body.getEmail());
-//		final var output = serviceProviderUpdateUseCase.execute(input);
-//		final var response = new ServiceProviderDTO().id(output.id()).name(output.name()).document(output.document())
-//				.phone(output.phone()).beautyServices(output.beautyServices()).address(output.address())
-//				.email(output.email());
-//		return ResponseEntity.ok(response);
-//	}
+	@Override
+	public ResponseEntity<ServiceProviderDTO> getServiceProviderById(final Long id) {
+		Output output = serviceProviderGetByIdUseCase.execute(id);
+		final var response = new ServiceProviderDTO().id(output.id()).name(output.name()).document(output.document())
+				.phone(output.phone()).beautyServices(output.beautyServices()).address(output.address())
+				.email(output.email());
+		return ResponseEntity.ok(response);
+	}
+
+	@Override
+	public ResponseEntity<ServiceProviderDTO> updateServiceProviderById(final Long id, final UpdateServiceProviderDTO body) {
+		final var input = new ServiceProviderUpdateUseCase.Input(id, body.getName(), body.getDocument(),
+				body.getPhone(), body.getBeautyServices(), body.getAddress(), body.getEmail());
+		final var output = serviceProviderUpdateUseCase.execute(input);
+		final var response = new ServiceProviderDTO().id(output.id()).name(output.name()).document(output.document())
+				.phone(output.phone()).beautyServices(output.beautyServices()).address(output.address())
+				.email(output.email());
+		return ResponseEntity.ok(response);
+	}
 
 }
