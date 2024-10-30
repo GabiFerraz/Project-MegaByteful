@@ -1,7 +1,7 @@
 package com.megabyteful.infrastructure.api;
 
 import com.megabyteful.application.domain.Customer;
-import com.megabyteful.application.usecase.RegisterClient;
+import com.megabyteful.application.usecase.CreateClient;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/megabyteful/customers")
 public class CustomerController {
 
-    private final RegisterClient registerClient;
+    private final CreateClient createClient;
 
     @PostMapping
-    public ResponseEntity<Customer> createClient(
+    public ResponseEntity<Customer> create(
             final @RequestBody @Valid Customer customer) {
-        return ResponseEntity.ok(registerClient.execute(customer));
+
+        return ResponseEntity.ok(createClient.execute(customer));
     }
 }
