@@ -17,6 +17,7 @@ public class Customer {
 
   @NotBlank(message = "Name is required")
   @Size(max = 100, message = "Name length must be less than 100 characters")
+  @Pattern(regexp = "[a-zA-Z\\s]+", message = "Name must contain only letters and spaces")
   private String name;
 
   @NotBlank(message = "CPF is required")
@@ -28,6 +29,7 @@ public class Customer {
   private String phone;
 
   @NotBlank(message = "Email is required")
+  @Size(max = 255, message = "Email length must be less than 255 characters")
   @Email(message = "Email should be valid")
   private String email;
 
