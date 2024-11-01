@@ -6,6 +6,4 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class MegaBytefulGatewayImpl implements MegaBytefulGateway {
-
-}
+public class MegaBytefulGatewayImpl implements MegaBytefulGateway {}

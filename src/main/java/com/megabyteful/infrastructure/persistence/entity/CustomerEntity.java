@@ -12,19 +12,19 @@ import lombok.*;
 @Builder
 public class CustomerEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id;
 
-    @Column(name = "name")
-    private String name;
+  @Column(name = "name")
+  private String name;
 
-    @Column(name = "cpf")
-    private String cpf;
+  @Column(name = "cpf", unique = true, nullable = false)
+  private String cpf;
 
-    @Column(name = "phone")
-    private String phone;
+  @Column(name = "phone")
+  private String phone;
 
-    @Column(name = "email")
-    private String email;
+  @Column(name = "email")
+  private String email;
 }

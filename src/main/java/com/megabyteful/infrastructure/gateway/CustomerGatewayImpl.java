@@ -2,63 +2,68 @@ package com.megabyteful.infrastructure.gateway;
 
 import com.megabyteful.application.domain.Customer;
 import com.megabyteful.application.gateway.CustomerGateway;
+import com.megabyteful.application.usecase.exception.CustomerNotFoundException;
 import com.megabyteful.infrastructure.persistence.entity.CustomerEntity;
 import com.megabyteful.infrastructure.persistence.repository.CustomerRepository;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import java.util.Optional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @RequiredArgsConstructor
 public class CustomerGatewayImpl implements CustomerGateway {
 
-    private final CustomerRepository customerRepository;
+  private final CustomerRepository customerRepository;
 
-    @Override
-    public Customer save(final Customer customer) {
-        final var entity = CustomerEntity.builder()
-                .name(customer.getName())
-                .cpf(customer.getCpf())
-                .phone(customer.getPhone())
-                .email(customer.getEmail())
-                .build();
+  @Override
+  public Customer save(final Customer customer) {
+    final var entity =
+        CustomerEntity.builder()
+            .name(customer.getName())
+            .cpf(customer.getCpf())
+            .phone(customer.getPhone())
+            .email(customer.getEmail())
+            .build();
 
-        final var saved = customerRepository.save(entity);
+    final var saved = customerRepository.save(entity);
 
-        return this.toResponse(saved);
-    }
+    return this.toResponse(saved);
+  }
 
-    @Override
-    public Optional<Customer> findByCpf(final String cpf) {
-        return customerRepository.findByCpf(cpf)
-                .map(this::toResponse);
-    }
+  @Override
+  public Optional<Customer> findByCpf(final String cpf) {
+    return customerRepository.findByCpf(cpf).map(this::toResponse);
+  }
 
-    @Override
-    public Customer update(final Customer customer) {
-        final var entity = CustomerEntity.builder()
-                .name(customer.getName())
-                .cpf(customer.getCpf())
-                .phone(customer.getPhone())
-                .email(customer.getEmail())
-                .build();
+  @Override
+  public Customer update(final Customer customer) {
+    final var customerFound =
+        customerRepository
+            .findByCpf(customer.getCpf())
+            .orElseThrow(() -> new CustomerNotFoundException(customer.getCpf()));
 
-        final var updated = customerRepository.save(entity);
+    final var newEntity =
+        CustomerEntity.builder()
+            .id(customerFound.getId())
+            .name(customer.getName())
+            .cpf(customer.getCpf())
+            .phone(customer.getPhone())
+            .email(customer.getEmail())
+            .build();
 
-        return this.toResponse(updated);
-    }
+    final var updated = customerRepository.save(newEntity);
 
-    @Override
-    public void delete(final String cpf) {
-        customerRepository.deleteByCpf(cpf);
-    }
+    return this.toResponse(updated);
+  }
 
-    private Customer toResponse(final CustomerEntity entity) {
-        return new Customer(
-                entity.getName(),
-                entity.getCpf(),
-                entity.getPhone(),
-                entity.getEmail());
-    }
+  @Transactional
+  @Override
+  public void delete(final String cpf) {
+    customerRepository.deleteByCpf(cpf);
+  }
+
+  private Customer toResponse(final CustomerEntity entity) {
+    return new Customer(entity.getName(), entity.getCpf(), entity.getPhone(), entity.getEmail());
+  }
 }
