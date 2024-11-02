@@ -12,11 +12,11 @@ import lombok.*;
 @Builder
 public class AppointmentEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private int scheduleId;
-    private int customerId;
-    private int serviceProviderID;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id;
 
+  private int scheduleId;
+  private int customerId;
+  private int serviceProviderID;
 }

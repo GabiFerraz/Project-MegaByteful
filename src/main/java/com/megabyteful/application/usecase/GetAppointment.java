@@ -9,9 +9,11 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class GetAppointment {
 
-    private final AppointmentGateway gateway;
+  private final AppointmentGateway gateway;
 
-    public Appointment execute(final int id) {
-        return gateway.findById(id).orElseThrow(() -> new RuntimeException("Appointment not found with id: " + id));
-    }
+  public Appointment execute(final int id) {
+    return gateway
+        .findById(id)
+        .orElseThrow(() -> new RuntimeException("Appointment not found with id: " + id));
+  }
 }

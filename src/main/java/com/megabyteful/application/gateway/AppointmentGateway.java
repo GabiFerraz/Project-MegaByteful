@@ -5,11 +5,11 @@ import java.util.Optional;
 
 public interface AppointmentGateway {
 
-    Appointment save(final Appointment appointment);
+  Appointment save(final Appointment appointment);
 
-    Optional<Appointment> findById(final int id);
+  Optional<Appointment> findById(final int id);
 
-    Appointment updateAppointment(final Appointment appointment);
+  Appointment updateAppointment(final Appointment appointment);
 
-    void delete(final int id);
+  void delete(final int id);
 }

@@ -8,14 +8,14 @@ import lombok.*;
 @Setter
 @Builder
 public class Appointment {
-    private int id;
-    private int scheduleId;
-    private int customerId;
-    private int serviceProviderID;
+  private int id;
+  private int scheduleId;
+  private int customerId;
+  private int serviceProviderID;
 
-    public static Appointment createAppointment(
-            final int id, int scheduleId, int customerId, final int serviceProviderID) {
+  public static Appointment createAppointment(
+      final int id, int scheduleId, int customerId, final int serviceProviderID) {
 
-        return new Appointment(id, scheduleId, customerId, serviceProviderID);
-    }
+    return new Appointment(id, scheduleId, customerId, serviceProviderID);
+  }
 }

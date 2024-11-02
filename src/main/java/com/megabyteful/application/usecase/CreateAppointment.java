@@ -1,10 +1,7 @@
 package com.megabyteful.application.usecase;
 
 import com.megabyteful.application.domain.Appointment;
-import com.megabyteful.application.domain.Customer;
 import com.megabyteful.application.gateway.AppointmentGateway;
-import com.megabyteful.application.gateway.CustomerGateway;
-import com.megabyteful.application.usecase.exception.CustomerAlreadyExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -22,12 +19,12 @@ public class CreateAppointment {
       throw new RuntimeException("appointment already exists");
     }
 
-    final var buildDomain = Appointment.createAppointment(
+    final var buildDomain =
+        Appointment.createAppointment(
             AppointmentDomain.getId(),
             AppointmentDomain.getScheduleId(),
             AppointmentDomain.getCustomerId(),
-            AppointmentDomain.getServiceProviderID()
-        );
+            AppointmentDomain.getServiceProviderID());
 
     return gateway.save(buildDomain);
   }
