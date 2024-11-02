@@ -1,6 +1,7 @@
 package com.megabyteful.infrastructure.api;
 
 import com.megabyteful.application.domain.Appointment;
+import com.megabyteful.application.usecase.CreateAppointment;
 import com.megabyteful.application.usecase.GetAppointment;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 public class AppointmentController {
 
     private final GetAppointment getAppointment;
+    private final CreateAppointment createAppointment;
 
     @GetMapping("/{id}")
     public ResponseEntity<Appointment> findById(final @PathVariable int id) {
@@ -23,7 +25,7 @@ public class AppointmentController {
     @PostMapping("/createAppointment")
     public ResponseEntity<Appointment> createAppointment(final @RequestBody @Valid Appointment appointment) {
 
-        return ResponseEntity.ok(appointment);
+        return ResponseEntity.ok(createAppointment.execute(appointment));
     }
 
 
