@@ -19,12 +19,11 @@ public class CreateCustomer {
       throw new CustomerAlreadyExistsException(customerDomain.getName(), customerDomain.getCpf());
     }
 
-    final var buildDomain =
-        Customer.createCustomer(
-            customerDomain.getName(),
-            customerDomain.getCpf(),
-            customerDomain.getPhone(),
-            customerDomain.getEmail());
+    final var buildDomain = Customer.createCustomer(
+        customerDomain.getName(),
+        customerDomain.getCpf(),
+        customerDomain.getPhone(),
+        customerDomain.getEmail());
 
     return gateway.save(buildDomain);
   }
