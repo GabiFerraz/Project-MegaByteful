@@ -52,5 +52,4 @@ public class AppointmentController {
 
     return ResponseEntity.ok("Notificação enviada com sucesso");
   }
-
 }

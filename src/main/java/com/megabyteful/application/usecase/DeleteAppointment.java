@@ -13,9 +13,7 @@ public class DeleteAppointment {
 
   public void execute(final int id) {
     final var appointment =
-        gateway
-            .findById(id)
-            .orElseThrow(() -> new AppointmentNotFoundException(id));
+        gateway.findById(id).orElseThrow(() -> new AppointmentNotFoundException(id));
 
     gateway.delete(appointment.getId());
   }
