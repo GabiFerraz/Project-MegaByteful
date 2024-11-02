@@ -5,5 +5,4 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/services")
-public class ServiceController {
-}
+public class ServiceController {}

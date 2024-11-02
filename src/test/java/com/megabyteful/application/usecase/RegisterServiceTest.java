@@ -1,4 +1,3 @@
 package com.megabyteful.application.usecase;
 
-public class RegisterServiceTest {
-}
+public class RegisterServiceTest {}
