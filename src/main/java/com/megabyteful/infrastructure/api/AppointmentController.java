@@ -1,6 +1,7 @@
 package com.megabyteful.infrastructure.api;
 
 import com.megabyteful.application.domain.Appointment;
+import com.megabyteful.application.usecase.GetAppointment;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -11,36 +12,30 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/megabyteful/v1/appointments")
 public class AppointmentController {
 
-    @GetMapping("/{appointmentId}")
-    public ResponseEntity<Appointment> findByAppointmentId(final @PathVariable String appointmentId) {
+    private final GetAppointment getAppointment;
 
-        Appointment appointment = new Appointment();
-        appointment.setId(1);
-        appointment.setCustomerId(1);
-        appointment.setScheduleId(1);
-        appointment.setServiceProviderID(1);
+    @GetMapping("/{id}")
+    public ResponseEntity<Appointment> findById(final @PathVariable int id) {
 
-        return ResponseEntity.ok(appointment);
+        return ResponseEntity.ok(getAppointment.execute(id));
     }
 
     @PostMapping("/createAppointment")
     public ResponseEntity<Appointment> createAppointment(final @RequestBody @Valid Appointment appointment) {
 
-
-
         return ResponseEntity.ok(appointment);
     }
 
 
-    @PutMapping("/{appointmentId}")
+    @PutMapping("/{id}")
     public ResponseEntity<Appointment> updateAppointment(
-            final @PathVariable int appointmentId, final @RequestBody @Valid Appointment appointment) {
+            final @PathVariable int id, final @RequestBody @Valid Appointment appointment) {
 
         return ResponseEntity.ok(appointment);
     }
 
-    @DeleteMapping("/{appointmentId}")
-    public ResponseEntity<Void> deleteAppointment(final @PathVariable int appointmentId) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteAppointment(final @PathVariable int id) {
 
         return ResponseEntity.noContent().build();
     }
