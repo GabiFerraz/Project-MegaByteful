@@ -3,6 +3,7 @@ package com.megabyteful.infrastructure.api;
 import com.megabyteful.application.domain.Appointment;
 import com.megabyteful.application.usecase.CreateAppointment;
 import com.megabyteful.application.usecase.GetAppointment;
+import com.megabyteful.application.usecase.UpdateAppointment;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ public class AppointmentController {
 
     private final GetAppointment getAppointment;
     private final CreateAppointment createAppointment;
+    private final UpdateAppointment updateAppointment;
 
     @GetMapping("/{id}")
     public ResponseEntity<Appointment> findById(final @PathVariable int id) {
@@ -33,7 +35,8 @@ public class AppointmentController {
     public ResponseEntity<Appointment> updateAppointment(
             final @PathVariable int id, final @RequestBody @Valid Appointment appointment) {
 
-        return ResponseEntity.ok(appointment);
+        Appointment updatedAppointment = updateAppointment.execute(id, appointment);
+        return ResponseEntity.ok(updatedAppointment);
     }
 
     @DeleteMapping("/{id}")
@@ -49,4 +52,5 @@ public class AppointmentController {
 
         return ResponseEntity.ok("Notificação enviada com sucesso");
     }
+
 }

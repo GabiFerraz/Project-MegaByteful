@@ -36,7 +36,7 @@ public class AppointmentGatewayImpl implements AppointmentGateway {
     }
 
     @Override
-    public Appointment update(Appointment appointment) {
+    public Appointment updateAppointment(Appointment appointment) {
         final var appointmentFound =
                 appointmentRepository
                         .findById(appointment.getId())
