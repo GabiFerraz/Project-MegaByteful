@@ -1,6 +1,6 @@
 package com.megabyteful.application.usecase;
 
-import static com.megabyteful.application.usecase.fixture.CustomerTestFixture.validCustomer;
+import static com.megabyteful.application.usecase.fixture.CustomerTestFixture.validCustomerResponse;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
@@ -21,7 +21,7 @@ class DeleteCustomerTest {
   @Test
   void shouldDeleteCustomerSuccessfully() {
     final var cpf = "12345678901";
-    final var responseGateway = validCustomer();
+    final var responseGateway = validCustomerResponse();
 
     when(customerGateway.findByCpf(cpf)).thenReturn(Optional.of(responseGateway));
     doNothing().when(customerGateway).delete(cpf);

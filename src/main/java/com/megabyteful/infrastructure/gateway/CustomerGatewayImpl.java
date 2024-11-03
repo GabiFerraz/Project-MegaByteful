@@ -64,6 +64,7 @@ public class CustomerGatewayImpl implements CustomerGateway {
   }
 
   private Customer toResponse(final CustomerEntity entity) {
-    return new Customer(entity.getName(), entity.getCpf(), entity.getPhone(), entity.getEmail());
+    return new Customer(
+        entity.getId(), entity.getName(), entity.getCpf(), entity.getPhone(), entity.getEmail());
   }
 }

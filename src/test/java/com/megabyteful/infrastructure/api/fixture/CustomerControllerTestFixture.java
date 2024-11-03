@@ -1,14 +1,22 @@
-package com.megabyteful.application.usecase.fixture;
+package com.megabyteful.infrastructure.api.fixture;
 
 import com.megabyteful.application.domain.Customer;
 import com.megabyteful.application.dto.UpdateCustomerRequest;
 
-public class CustomerTestFixture {
+public class CustomerControllerTestFixture {
 
   public static Customer validCustomerRequest() {
     return Customer.builder()
         .name("John Doe")
         .cpf("12345678901")
+        .phone("12345678969")
+        .email("test@example.com")
+        .build();
+  }
+
+  public static UpdateCustomerRequest validUpdateCustomerRequest() {
+    return UpdateCustomerRequest.builder()
+        .name("John Doe")
         .phone("12345678969")
         .email("test@example.com")
         .build();
@@ -21,24 +29,6 @@ public class CustomerTestFixture {
         .cpf("12345678901")
         .phone("12345678969")
         .email("test@example.com")
-        .build();
-  }
-
-  public static UpdateCustomerRequest customerUpdateRequest() {
-    return UpdateCustomerRequest.builder()
-        .name("John Doe")
-        .phone("98776576767")
-        .email("testing@test.com")
-        .build();
-  }
-
-  public static Customer validUpdatedCustomerResponse() {
-    return Customer.builder()
-        .id(1)
-        .name("John Doe")
-        .cpf("12345678901")
-        .phone("98776576767")
-        .email("testing@test.com")
         .build();
   }
 }
