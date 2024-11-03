@@ -23,6 +23,9 @@ public class Schedule {
   @NotNull(message = "Service id cannot be null")
   private Integer serviceId;
 
+  @NotEmpty(message = "Appointment can not to be empty")
+  private List<Appointment> appointments;
+
   @Future(message = "Date must be in the future")
   @NotNull(message = "Date cannot be null")
   private LocalDateTime serviceTime;
@@ -31,7 +34,10 @@ public class Schedule {
   private List<String> availableTimes;
 
   public static Schedule createSchedule(
-      final Integer serviceId, final LocalDateTime serviceTime, final List<String> availableTimes) {
-    return new Schedule(null, serviceId, serviceTime, availableTimes);
+      final Integer serviceId,
+      final List<Appointment> appointments,
+      final LocalDateTime serviceTime,
+      final List<String> availableTimes) {
+    return new Schedule(null, serviceId, appointments, serviceTime, availableTimes);
   }
 }

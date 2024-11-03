@@ -6,13 +6,13 @@ import java.util.Optional;
 
 public interface FeedbackGateway {
 
-    Feedback save(final Feedback feedback);
+  Feedback save(final Feedback feedback);
 
-    Optional<Feedback> findById(final int id);
+  Optional<Feedback> findById(final int id);
 
-    List<Feedback> findByProfessionalAndService(final int professionalId, final int serviceId);
+  List<Feedback> findByProfessionalAndService(final int professionalId, final int serviceId);
 
-    Feedback update(final Feedback feedback);
+  Feedback update(final Feedback feedback);
 
-    void delete(final int id);
+  void delete(final int id);
 }

@@ -15,31 +15,28 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RequestMapping("/megabyteful/v1/feedback")
 public class FeedbackController {
 
-    private final CreateFeedback createFeedback;
-    private final GetFeedbackByProfessional getFeedbackByProfessional;
+  private final CreateFeedback createFeedback;
+  private final GetFeedbackByProfessional getFeedbackByProfessional;
 
-    @PostMapping("/create")
-    public ResponseEntity<Feedback> createFeedback(
-            final @RequestBody @Valid Feedback feedback) {
+  @PostMapping("/create")
+  public ResponseEntity<Feedback> createFeedback(final @RequestBody @Valid Feedback feedback) {
 
-        final var createdFeedback = createFeedback.execute(feedback);
+    final var createdFeedback = createFeedback.execute(feedback);
 
-        URI location =
-                ServletUriComponentsBuilder.fromCurrentRequest()
-                        .path("/{id}")
-                        .buildAndExpand(createdFeedback.getId())
-                        .toUri();
+    URI location =
+        ServletUriComponentsBuilder.fromCurrentRequest()
+            .path("/{id}")
+            .buildAndExpand(createdFeedback.getId())
+            .toUri();
 
-        return ResponseEntity.created(location).body(createdFeedback);
-    }
+    return ResponseEntity.created(location).body(createdFeedback);
+  }
 
-    @GetMapping("/professional/{professionalId}/service/{serviceId}")
-    public ResponseEntity<List<Feedback>> findByProfessionalIdAndServiceId(
-            final @PathVariable int professionalId,
-            final @PathVariable int serviceId) {
+  @GetMapping("/professional/{professionalId}/service/{serviceId}")
+  public ResponseEntity<List<Feedback>> findByProfessionalIdAndServiceId(
+      final @PathVariable int professionalId, final @PathVariable int serviceId) {
 
-        List<Feedback> feedbackList = getFeedbackByProfessional.execute(professionalId, serviceId);
-        return ResponseEntity.ok(feedbackList);
-    }
+    List<Feedback> feedbackList = getFeedbackByProfessional.execute(professionalId, serviceId);
+    return ResponseEntity.ok(feedbackList);
+  }
 }
-

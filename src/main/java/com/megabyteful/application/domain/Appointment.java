@@ -1,6 +1,8 @@
 package com.megabyteful.application.domain;
 
+import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import lombok.*;
 
 @NoArgsConstructor
@@ -9,20 +11,21 @@ import lombok.*;
 @Setter
 @Builder
 public class Appointment {
-  private int id;
+  private Integer id;
 
   @NotNull(message = "Schedule ID is required")
-  private int scheduleId;
+  private Integer scheduleId;
 
   @NotNull(message = "Customer ID is required")
-  private int customerId;
+  private Integer customerId;
 
-  @NotNull(message = "Service Provider ID is required")
-  private int serviceProviderId;
+  @Future(message = "Date must be in the future")
+  @NotNull(message = "Date is required")
+  private LocalDateTime serviceTime;
 
   public static Appointment createAppointment(
-      final int id, int scheduleId, int customerId, final int serviceProviderID) {
+      final Integer scheduleId, final Integer customerId, final LocalDateTime serviceTime) {
 
-    return new Appointment(id, scheduleId, customerId, serviceProviderID);
+    return new Appointment(null, scheduleId, customerId, serviceTime);
   }
 }

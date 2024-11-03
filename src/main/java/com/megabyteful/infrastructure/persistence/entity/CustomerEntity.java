@@ -1,11 +1,7 @@
 package com.megabyteful.infrastructure.persistence.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -36,4 +32,7 @@ public class CustomerEntity {
 
   @Column(name = "email")
   private String email;
+
+  @OneToMany(mappedBy = "customer")
+  private List<AppointmentEntity> appointments;
 }

@@ -1,9 +1,7 @@
 package com.megabyteful.application.domain;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -37,9 +35,16 @@ public class Customer {
   @Email(message = "Email should be valid")
   private String email;
 
-  public static Customer createCustomer(
-      final String name, final String cpf, final String phone, final String email) {
+  @NotEmpty(message = "Appointment can not to be empty")
+  private List<Appointment> appointments;
 
-    return new Customer(null, name, cpf, phone, email);
+  public static Customer createCustomer(
+      final String name,
+      final String cpf,
+      final String phone,
+      final String email,
+      final List<Appointment> appointments) {
+
+    return new Customer(null, name, cpf, phone, email, appointments);
   }
 }

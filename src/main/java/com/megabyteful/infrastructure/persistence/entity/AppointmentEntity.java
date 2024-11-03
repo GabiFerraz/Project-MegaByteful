@@ -1,6 +1,7 @@
 package com.megabyteful.infrastructure.persistence.entity;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 import lombok.*;
 
 @Entity
@@ -16,7 +17,14 @@ public class AppointmentEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
 
-  private int scheduleId;
-  private int customerId;
-  private int serviceProviderID;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "schedule_id", nullable = false)
+  private ScheduleEntity schedule;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "customer_id", nullable = false)
+  private CustomerEntity customer;
+
+  @Column(name = "service_time", nullable = false)
+  private LocalDateTime serviceTime;
 }

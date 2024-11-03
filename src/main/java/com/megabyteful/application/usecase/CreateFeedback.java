@@ -10,24 +10,27 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class CreateFeedback {
 
-    private final FeedbackGateway gateway;
+  private final FeedbackGateway gateway;
 
-    public Feedback execute(final Feedback feedbackDomain) {
+  public Feedback execute(final Feedback feedbackDomain) {
 
-        final var existingFeedbacks = gateway.findByProfessionalAndService(feedbackDomain.getProfessionalId(), feedbackDomain.getServiceId());
+    final var existingFeedbacks =
+        gateway.findByProfessionalAndService(
+            feedbackDomain.getProfessionalId(), feedbackDomain.getServiceId());
 
-        if (!existingFeedbacks.isEmpty()) {
-            throw new FeedbackAlreadyExistsException(feedbackDomain.getProfessionalId(), feedbackDomain.getServiceId());
-        }
-
-        final var buildDomain = Feedback.createFeedback(
-                feedbackDomain.getId(),
-                feedbackDomain.getRating(),
-                feedbackDomain.getComment(),
-                feedbackDomain.getProfessionalId(),
-                feedbackDomain.getServiceId()
-        );
-
-        return gateway.save(buildDomain);
+    if (!existingFeedbacks.isEmpty()) {
+      throw new FeedbackAlreadyExistsException(
+          feedbackDomain.getProfessionalId(), feedbackDomain.getServiceId());
     }
+
+    final var buildDomain =
+        Feedback.createFeedback(
+            feedbackDomain.getId(),
+            feedbackDomain.getRating(),
+            feedbackDomain.getComment(),
+            feedbackDomain.getProfessionalId(),
+            feedbackDomain.getServiceId());
+
+    return gateway.save(buildDomain);
+  }
 }

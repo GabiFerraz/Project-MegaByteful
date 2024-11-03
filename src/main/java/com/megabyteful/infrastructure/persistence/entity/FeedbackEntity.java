@@ -12,18 +12,18 @@ import lombok.*;
 @Builder
 public class FeedbackEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id;
 
-    private double rating;
+  private double rating;
 
-    @Column(length = 500)
-    private String comment;
+  @Column(length = 500)
+  private String comment;
 
-    @Column(name = "professional_id")
-    private int professionalId;
+  @Column(name = "professional_id")
+  private int professionalId;
 
-    @Column(name = "service_id")
-    private int serviceId;
+  @Column(name = "service_id")
+  private int serviceId;
 }
