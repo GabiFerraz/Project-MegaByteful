@@ -14,6 +14,7 @@ import static org.mockito.Mockito.when;
 import com.megabyteful.application.domain.Customer;
 import com.megabyteful.application.gateway.CustomerGateway;
 import com.megabyteful.application.usecase.exception.CustomerAlreadyExistsException;
+import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -38,6 +39,7 @@ class CreateCustomerTest {
     assertThat(createdCustomer.getCpf()).isEqualTo(request.getCpf());
     assertThat(createdCustomer.getPhone()).isEqualTo(request.getPhone());
     assertThat(createdCustomer.getEmail()).isEqualTo(request.getEmail());
+    assertThat(createdCustomer.getAppointments()).isEqualTo(List.of());
 
     verify(customerGateway).findByCpf(any());
 
@@ -50,6 +52,7 @@ class CreateCustomerTest {
     assertThat(captorCustomer.getValue().getCpf()).isEqualTo(request.getCpf());
     assertThat(captorCustomer.getValue().getPhone()).isEqualTo(request.getPhone());
     assertThat(captorCustomer.getValue().getEmail()).isEqualTo(request.getEmail());
+    assertThat(captorCustomer.getValue().getAppointments()).isEqualTo(List.of());
   }
 
   @Test

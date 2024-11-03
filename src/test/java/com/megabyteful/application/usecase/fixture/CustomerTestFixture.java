@@ -2,6 +2,7 @@ package com.megabyteful.application.usecase.fixture;
 
 import com.megabyteful.application.domain.Customer;
 import com.megabyteful.application.dto.UpdateCustomerRequest;
+import java.util.List;
 
 public class CustomerTestFixture {
 
@@ -11,6 +12,7 @@ public class CustomerTestFixture {
         .cpf("12345678901")
         .phone("12345678969")
         .email("test@example.com")
+        .appointments(List.of())
         .build();
   }
 
@@ -21,6 +23,7 @@ public class CustomerTestFixture {
         .cpf("12345678901")
         .phone("12345678969")
         .email("test@example.com")
+        .appointments(List.of())
         .build();
   }
 
@@ -39,6 +42,7 @@ public class CustomerTestFixture {
         .cpf("12345678901")
         .phone("98776576767")
         .email("testing@test.com")
+        .appointments(List.of())
         .build();
   }
 }

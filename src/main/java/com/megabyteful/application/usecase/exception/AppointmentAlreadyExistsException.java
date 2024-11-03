@@ -8,9 +8,9 @@ import lombok.Getter;
 public class AppointmentAlreadyExistsException extends BusinessException {
 
   private static final String ERROR_CODE = "already_exists";
-  private static final String MESSAGE = "Appointment [%s] with id [%s] already exists.";
+  private static final String MESSAGE = "Appointment with schedule id [%s] already exists.";
 
-  public AppointmentAlreadyExistsException(final int id) {
+  public AppointmentAlreadyExistsException(final Integer id) {
     super(format(MESSAGE, id), ERROR_CODE);
   }
 }

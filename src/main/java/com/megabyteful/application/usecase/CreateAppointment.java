@@ -19,7 +19,7 @@ public class CreateAppointment {
             request.getScheduleId(), request.getCustomerId(), request.getServiceTime());
 
     if (appointmentExist) {
-      throw new AppointmentAlreadyExistsException(request.getId());
+      throw new AppointmentAlreadyExistsException(request.getScheduleId());
     }
 
     final var buildDomain =

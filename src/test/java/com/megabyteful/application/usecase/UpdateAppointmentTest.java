@@ -37,8 +37,7 @@ class UpdateAppointmentTest {
 
     assertThat(updatedAppointment.getId()).isEqualTo(appointmentUpdated.getId());
     assertThat(updatedAppointment.getCustomerId()).isEqualTo(appointmentUpdated.getCustomerId());
-    assertThat(updatedAppointment.getServiceProviderId())
-        .isEqualTo(appointmentUpdated.getServiceProviderId());
+    assertThat(updatedAppointment.getServiceTime()).isEqualTo(appointmentUpdated.getServiceTime());
     assertThat(updatedAppointment.getScheduleId()).isEqualTo(appointmentUpdated.getScheduleId());
 
     verify(appointmentGateway).findById(id);
@@ -49,8 +48,7 @@ class UpdateAppointmentTest {
 
     assertThat(captorAppointment.getValue().getId()).isEqualTo(request.getId());
     assertThat(captorAppointment.getValue().getCustomerId()).isEqualTo(request.getCustomerId());
-    assertThat(captorAppointment.getValue().getServiceProviderId())
-        .isEqualTo(request.getServiceProviderId());
+    assertThat(captorAppointment.getValue().getServiceTime()).isEqualTo(request.getServiceTime());
     assertThat(captorAppointment.getValue().getScheduleId()).isEqualTo(request.getScheduleId());
   }
 
@@ -63,7 +61,7 @@ class UpdateAppointmentTest {
 
     assertThatThrownBy(() -> updateAppointment.execute(id, request))
         .isInstanceOf(AppointmentNotFoundException.class)
-        .hasMessage("Appointment with Id [999] not found.");
+        .hasMessage("Appointment with id [999] not found.");
 
     verify(appointmentGateway).findById(id);
     verify(appointmentGateway, never()).update(any());

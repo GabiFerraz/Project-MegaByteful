@@ -1,6 +1,6 @@
 package com.megabyteful.application.usecase;
 
-import static com.megabyteful.application.usecase.fixture.AppointmentTestFixture.validAppointment;
+import static com.megabyteful.application.usecase.fixture.AppointmentTestFixture.validAppointmentResponse;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
@@ -20,8 +20,8 @@ class DeleteAppointmentTest {
 
   @Test
   void shouldDeleteAppointmentSuccessfully() {
-    final var id = 999;
-    final var responseGateway = validAppointment();
+    final var id = 1;
+    final var responseGateway = validAppointmentResponse();
 
     when(appointmentGateway.findById(id)).thenReturn(Optional.of(responseGateway));
     doNothing().when(appointmentGateway).delete(id);
@@ -34,13 +34,13 @@ class DeleteAppointmentTest {
 
   @Test
   void shouldNotDeleteAppointmentWhenCpfDoesNotExist() {
-    final var id = 999;
+    final var id = 1;
 
     when(appointmentGateway.findById(id)).thenReturn(Optional.empty());
 
     assertThatThrownBy(() -> deleteAppointment.execute(id))
         .isInstanceOf(AppointmentNotFoundException.class)
-        .hasMessage("Appointment with id [999] not found.");
+        .hasMessage("Appointment with id [1] not found.");
 
     verify(appointmentGateway).findById(id);
     verify(appointmentGateway, never()).delete(id);

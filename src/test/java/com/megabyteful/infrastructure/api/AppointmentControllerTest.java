@@ -41,7 +41,7 @@ class AppointmentControllerTest {
       final var request = validAppointmentRequest();
       final var createResponse = validAppointmentRequest();
 
-      when(createAppointment.execute(any())).thenReturn(createResponse);
+      when(createAppointment.execute(any(), any())).thenReturn(createResponse);
 
       mockMvc
           .perform(
@@ -54,7 +54,7 @@ class AppointmentControllerTest {
           .andExpect(jsonPath("$.scheduleId", equalTo(999)))
           .andExpect(jsonPath("$.customerId", equalTo(999)));
 
-      verify(createAppointment).execute(any());
+      verify(createAppointment).execute(any(), any());
     }
   }
 

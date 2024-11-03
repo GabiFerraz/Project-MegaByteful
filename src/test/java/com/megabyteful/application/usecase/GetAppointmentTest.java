@@ -12,7 +12,7 @@ import com.megabyteful.application.usecase.exception.AppointmentNotFoundExceptio
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 
-public class GetAppointmetTest {
+class GetAppointmentTest {
 
   private final AppointmentGateway appointmentGateway = mock(AppointmentGateway.class);
   private final GetAppointment getAppointment = new GetAppointment(appointmentGateway);
@@ -28,8 +28,7 @@ public class GetAppointmetTest {
 
     assertThat(appointmentFound.getId()).isEqualTo(responseGateway.getId());
     assertThat(appointmentFound.getScheduleId()).isEqualTo(responseGateway.getScheduleId());
-    assertThat(appointmentFound.getServiceProviderId())
-        .isEqualTo(responseGateway.getServiceProviderId());
+    assertThat(appointmentFound.getServiceTime()).isEqualTo(responseGateway.getServiceTime());
     assertThat(appointmentFound.getCustomerId()).isEqualTo(responseGateway.getCustomerId());
 
     verify(appointmentGateway).findById(id);
@@ -43,7 +42,7 @@ public class GetAppointmetTest {
 
     assertThatThrownBy(() -> getAppointment.execute(id))
         .isInstanceOf(AppointmentNotFoundException.class)
-        .hasMessage("Appointment with Id [999] not found.");
+        .hasMessage("Appointment with id [999] not found.");
 
     verify(appointmentGateway).findById(id);
   }
