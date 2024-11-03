@@ -2,14 +2,17 @@ package com.megabyteful.infrastructure.gateway;
 
 import static java.lang.String.format;
 
+import com.megabyteful.application.domain.Appointment;
 import com.megabyteful.application.domain.Schedule;
 import com.megabyteful.application.gateway.ScheduleGateway;
 import com.megabyteful.application.usecase.exception.ScheduleNotFoundException;
+import com.megabyteful.infrastructure.persistence.entity.AppointmentEntity;
 import com.megabyteful.infrastructure.persistence.entity.ScheduleEntity;
 import com.megabyteful.infrastructure.persistence.entity.ServiceEntity;
 import com.megabyteful.infrastructure.persistence.repository.ScheduleRepository;
 import com.megabyteful.infrastructure.persistence.repository.ServiceRepository;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -36,6 +39,7 @@ public class ScheduleGatewayImpl implements ScheduleGateway {
     final var scheduleEntity =
         ScheduleEntity.builder()
             .service(serviceEntity)
+            .appointments(List.of())
             .serviceTime(schedule.getServiceTime())
             .availableTimes(schedule.getAvailableTimes())
             .build();
@@ -61,6 +65,7 @@ public class ScheduleGatewayImpl implements ScheduleGateway {
         ScheduleEntity.builder()
             .id(scheduleFound.getId())
             .service(scheduleFound.getService())
+            .appointments(scheduleFound.getAppointments())
             .serviceTime(schedule.getServiceTime())
             .availableTimes(schedule.getAvailableTimes())
             .build();
@@ -74,7 +79,20 @@ public class ScheduleGatewayImpl implements ScheduleGateway {
     return new Schedule(
         entity.getId(),
         entity.getService().getId(),
+        this.toAppointmentDomain(entity.getAppointments()),
         entity.getServiceTime(),
         entity.getAvailableTimes());
+  }
+
+  private List<Appointment> toAppointmentDomain(final List<AppointmentEntity> appointmentEntities) {
+    return appointmentEntities.stream()
+        .map(
+            appointmentEntity ->
+                new Appointment(
+                    appointmentEntity.getId(),
+                    appointmentEntity.getSchedule().getId(),
+                    appointmentEntity.getCustomer().getId(),
+                    appointmentEntity.getServiceTime()))
+        .toList();
   }
 }

@@ -35,7 +35,6 @@ public class Customer {
   @Email(message = "Email should be valid")
   private String email;
 
-  @NotEmpty(message = "Appointment can not to be empty")
   private List<Appointment> appointments;
 
   public static Customer createCustomer(

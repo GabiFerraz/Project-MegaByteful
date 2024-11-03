@@ -11,6 +11,7 @@ import com.megabyteful.infrastructure.persistence.entity.ScheduleEntity;
 import com.megabyteful.infrastructure.persistence.repository.AppointmentRepository;
 import com.megabyteful.infrastructure.persistence.repository.CustomerRepository;
 import com.megabyteful.infrastructure.persistence.repository.ScheduleRepository;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -44,7 +45,6 @@ public class AppointmentGatewayImpl implements AppointmentGateway {
 
     final var appointmentEntity =
         AppointmentEntity.builder()
-            .id(request.getId())
             .schedule(scheduleEntity)
             .customer(customerEntity)
             .serviceTime(request.getServiceTime())
@@ -61,23 +61,7 @@ public class AppointmentGatewayImpl implements AppointmentGateway {
   }
 
   @Override
-  public Appointment update(final Appointment request, final String cpf) {
-    final Optional<ScheduleEntity> scheduleEntityFound =
-        scheduleRepository.findByServiceTime(request.getServiceTime());
-
-    if (scheduleEntityFound.isEmpty()) {
-      throw new ScheduleNotFoundException(request.getServiceTime());
-    }
-
-    final Optional<CustomerEntity> customerEntityFound = customerRepository.findByCpf(cpf);
-
-    if (customerEntityFound.isEmpty()) {
-      throw new CustomerNotFoundException(cpf);
-    }
-
-    final var scheduleEntity = scheduleEntityFound.get();
-    final var customerEntity = customerEntityFound.get();
-
+  public Appointment update(final Appointment request) {
     final var appointmentFound =
         appointmentRepository
             .findById(request.getId())
@@ -86,8 +70,8 @@ public class AppointmentGatewayImpl implements AppointmentGateway {
     final var newEntity =
         AppointmentEntity.builder()
             .id(appointmentFound.getId())
-            .schedule(scheduleEntity)
-            .customer(customerEntity)
+            .schedule(appointmentFound.getSchedule())
+            .customer(appointmentFound.getCustomer())
             .serviceTime(request.getServiceTime())
             .build();
 
@@ -100,6 +84,13 @@ public class AppointmentGatewayImpl implements AppointmentGateway {
   @Override
   public void delete(final int id) {
     appointmentRepository.deleteById(id);
+  }
+
+  @Override
+  public boolean existsByScheduleCustomerAndTime(
+      final int scheduleId, final int customerId, final LocalDateTime serviceTime) {
+    return appointmentRepository.existsByScheduleIdAndCustomerIdAndServiceTime(
+        scheduleId, customerId, serviceTime);
   }
 
   private Appointment toResponse(final AppointmentEntity entity) {

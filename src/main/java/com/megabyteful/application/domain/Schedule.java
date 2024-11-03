@@ -23,7 +23,6 @@ public class Schedule {
   @NotNull(message = "Service id cannot be null")
   private Integer serviceId;
 
-  @NotEmpty(message = "Appointment can not to be empty")
   private List<Appointment> appointments;
 
   @Future(message = "Date must be in the future")

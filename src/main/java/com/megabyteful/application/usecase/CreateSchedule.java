@@ -21,7 +21,10 @@ public class CreateSchedule {
 
     final var buildDomain =
         Schedule.createSchedule(
-            request.getServiceId(), request.getServiceTime(), request.getAvailableTimes());
+            request.getServiceId(),
+            request.getAppointments(),
+            request.getServiceTime(),
+            request.getAvailableTimes());
 
     return gateway.save(buildDomain);
   }

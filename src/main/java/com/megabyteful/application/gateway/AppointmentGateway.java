@@ -1,6 +1,7 @@
 package com.megabyteful.application.gateway;
 
 import com.megabyteful.application.domain.Appointment;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 public interface AppointmentGateway {
@@ -9,8 +10,10 @@ public interface AppointmentGateway {
 
   Optional<Appointment> findById(final int id);
 
-  Appointment update(final Appointment appointment, final String cpf);
+  Appointment update(final Appointment appointment);
 
   void delete(final int id);
-  ;
+
+  boolean existsByScheduleCustomerAndTime(
+      final int scheduleId, final int customerId, final LocalDateTime serviceTime);
 }

@@ -11,25 +11,19 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/megabyteful/v1/appointments")
+@RequestMapping("/megabyteful/appointments")
 public class AppointmentController {
 
-  private final GetAppointment getAppointment;
   private final CreateAppointment createAppointment;
+  private final GetAppointment getAppointment;
   private final UpdateAppointment updateAppointment;
   private final DeleteAppointment deleteAppointment;
 
-  @GetMapping("/{id}")
-  public ResponseEntity<Appointment> findById(final @PathVariable int id) {
-
-    return ResponseEntity.ok(getAppointment.execute(id));
-  }
-
   @PostMapping("/createAppointment")
   public ResponseEntity<Appointment> createAppointment(
-      final @RequestBody @Valid Appointment appointment) {
+      final @RequestBody @Valid Appointment appointment, final @RequestParam String cpf) {
 
-    final var createdAppointment = createAppointment.execute(appointment);
+    final var createdAppointment = createAppointment.execute(appointment, cpf);
 
     URI location =
         ServletUriComponentsBuilder.fromCurrentRequest()
@@ -38,6 +32,12 @@ public class AppointmentController {
             .toUri();
 
     return ResponseEntity.created(location).body(createdAppointment);
+  }
+
+  @GetMapping("/{id}")
+  public ResponseEntity<Appointment> findById(final @PathVariable int id) {
+
+    return ResponseEntity.ok(getAppointment.execute(id));
   }
 
   @PutMapping("/{id}")

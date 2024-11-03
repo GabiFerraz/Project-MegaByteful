@@ -12,19 +12,20 @@ public class CreateCustomer {
 
   private final CustomerGateway gateway;
 
-  public Customer execute(final Customer customerDomain) {
-    final var customer = gateway.findByCpf(customerDomain.getCpf());
+  public Customer execute(final Customer request) {
+    final var customer = gateway.findByCpf(request.getCpf());
 
     if (customer.isPresent()) {
-      throw new CustomerAlreadyExistsException(customerDomain.getName(), customerDomain.getCpf());
+      throw new CustomerAlreadyExistsException(request.getName(), request.getCpf());
     }
 
     final var buildDomain =
         Customer.createCustomer(
-            customerDomain.getName(),
-            customerDomain.getCpf(),
-            customerDomain.getPhone(),
-            customerDomain.getEmail());
+            request.getName(),
+            request.getCpf(),
+            request.getPhone(),
+            request.getEmail(),
+            request.getAppointments());
 
     return gateway.save(buildDomain);
   }

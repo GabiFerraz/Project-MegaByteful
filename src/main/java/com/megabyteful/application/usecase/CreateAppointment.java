@@ -12,21 +12,20 @@ public class CreateAppointment {
 
   private final AppointmentGateway gateway;
 
-  public Appointment execute(final Appointment appointmentDomain) {
+  public Appointment execute(final Appointment request, final String cpf) {
 
-    final var appointment = gateway.findById(appointmentDomain.getId());
+    final var appointmentExist =
+        gateway.existsByScheduleCustomerAndTime(
+            request.getScheduleId(), request.getCustomerId(), request.getServiceTime());
 
-    if (appointment.isPresent()) {
-      throw new AppointmentAlreadyExistsException(appointmentDomain.getId());
+    if (appointmentExist) {
+      throw new AppointmentAlreadyExistsException(request.getId());
     }
 
     final var buildDomain =
         Appointment.createAppointment(
-            appointmentDomain.getId(),
-            appointmentDomain.getScheduleId(),
-            appointmentDomain.getCustomerId(),
-            appointmentDomain.getServiceProviderId());
+            request.getScheduleId(), request.getCustomerId(), request.getServiceTime());
 
-    return gateway.save(buildDomain);
+    return gateway.save(buildDomain, cpf);
   }
 }
