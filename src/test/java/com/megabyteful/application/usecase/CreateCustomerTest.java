@@ -1,6 +1,7 @@
 package com.megabyteful.application.usecase;
 
-import static com.megabyteful.application.usecase.fixture.CustomerTestFixture.validCustomer;
+import static com.megabyteful.application.usecase.fixture.CustomerTestFixture.validCustomerRequest;
+import static com.megabyteful.application.usecase.fixture.CustomerTestFixture.validCustomerResponse;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.ArgumentCaptor.forClass;
@@ -24,18 +25,19 @@ class CreateCustomerTest {
 
   @Test
   void shouldCreateCustomerSuccessfully() {
-    final var customerRequest = validCustomer();
-    final var gatewayResponse = validCustomer();
+    final var request = validCustomerRequest();
+    final var gatewayResponse = validCustomerResponse();
 
-    when(customerGateway.findByCpf(customerRequest.getCpf())).thenReturn(Optional.empty());
+    when(customerGateway.findByCpf(request.getCpf())).thenReturn(Optional.empty());
     when(customerGateway.save(any(Customer.class))).thenReturn(gatewayResponse);
 
-    final var createdCustomer = createCustomer.execute(customerRequest);
+    final var createdCustomer = createCustomer.execute(request);
 
-    assertThat(createdCustomer.getName()).isEqualTo(customerRequest.getName());
-    assertThat(createdCustomer.getCpf()).isEqualTo(customerRequest.getCpf());
-    assertThat(createdCustomer.getPhone()).isEqualTo(customerRequest.getPhone());
-    assertThat(createdCustomer.getEmail()).isEqualTo(customerRequest.getEmail());
+    assertThat(createdCustomer.getId()).isNotNull();
+    assertThat(createdCustomer.getName()).isEqualTo(request.getName());
+    assertThat(createdCustomer.getCpf()).isEqualTo(request.getCpf());
+    assertThat(createdCustomer.getPhone()).isEqualTo(request.getPhone());
+    assertThat(createdCustomer.getEmail()).isEqualTo(request.getEmail());
 
     verify(customerGateway).findByCpf(any());
 
@@ -43,25 +45,25 @@ class CreateCustomerTest {
 
     verify(customerGateway).save(captorCustomer.capture());
 
-    assertThat(captorCustomer.getValue().getName()).isEqualTo(customerRequest.getName());
-    assertThat(captorCustomer.getValue().getCpf()).isEqualTo(customerRequest.getCpf());
-    assertThat(captorCustomer.getValue().getPhone()).isEqualTo(customerRequest.getPhone());
-    assertThat(captorCustomer.getValue().getEmail()).isEqualTo(customerRequest.getEmail());
+    assertThat(captorCustomer.getValue().getId()).isNull();
+    assertThat(captorCustomer.getValue().getName()).isEqualTo(request.getName());
+    assertThat(captorCustomer.getValue().getCpf()).isEqualTo(request.getCpf());
+    assertThat(captorCustomer.getValue().getPhone()).isEqualTo(request.getPhone());
+    assertThat(captorCustomer.getValue().getEmail()).isEqualTo(request.getEmail());
   }
 
   @Test
   void shouldNotCreateCustomerWhenCpfAlreadyExists() {
-    final var customerRequest = validCustomer();
-    final var gatewayResponse = validCustomer();
+    final var request = validCustomerRequest();
+    final var gatewayResponse = validCustomerResponse();
 
-    when(customerGateway.findByCpf(customerRequest.getCpf()))
-        .thenReturn(Optional.of(gatewayResponse));
+    when(customerGateway.findByCpf(request.getCpf())).thenReturn(Optional.of(gatewayResponse));
 
-    assertThatThrownBy(() -> createCustomer.execute(customerRequest))
+    assertThatThrownBy(() -> createCustomer.execute(request))
         .isInstanceOf(CustomerAlreadyExistsException.class)
         .hasMessage("Customer [John Doe] with CPF [12345678901] already exists.");
 
     verify(customerGateway).findByCpf(any());
-    verify(customerGateway, never()).save(customerRequest);
+    verify(customerGateway, never()).save(request);
   }
 }

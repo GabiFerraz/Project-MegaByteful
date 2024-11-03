@@ -1,6 +1,6 @@
 package com.megabyteful.application.usecase;
 
-import static com.megabyteful.application.usecase.fixture.CustomerTestFixture.validCustomer;
+import static com.megabyteful.application.usecase.fixture.CustomerTestFixture.validCustomerResponse;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.Mockito.mock;
@@ -20,12 +20,13 @@ class GetCustomerTest {
   @Test
   void shouldGetCustomerSuccessfully() {
     final var cpf = "12345678901";
-    final var responseGateway = validCustomer();
+    final var responseGateway = validCustomerResponse();
 
     when(customerGateway.findByCpf(cpf)).thenReturn(Optional.of(responseGateway));
 
     final var customerFound = getCustomer.execute(cpf);
 
+    assertThat(customerFound.getId()).isEqualTo(responseGateway.getId());
     assertThat(customerFound.getName()).isEqualTo(responseGateway.getName());
     assertThat(customerFound.getCpf()).isEqualTo(responseGateway.getCpf());
     assertThat(customerFound.getPhone()).isEqualTo(responseGateway.getPhone());

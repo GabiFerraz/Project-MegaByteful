@@ -1,14 +1,17 @@
 package com.megabyteful.infrastructure.api;
 
 import com.megabyteful.application.domain.Customer;
+import com.megabyteful.application.dto.UpdateCustomerRequest;
 import com.megabyteful.application.usecase.CreateCustomer;
 import com.megabyteful.application.usecase.DeleteCustomer;
 import com.megabyteful.application.usecase.GetCustomer;
 import com.megabyteful.application.usecase.UpdateCustomer;
 import jakarta.validation.Valid;
+import java.net.URI;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,8 +25,15 @@ public class CustomerController {
 
   @PostMapping
   public ResponseEntity<Customer> create(final @RequestBody @Valid Customer customer) {
+    final var createdCustomer = createCustomer.execute(customer);
 
-    return ResponseEntity.ok(createCustomer.execute(customer));
+    URI location =
+        ServletUriComponentsBuilder.fromCurrentRequest()
+            .path("/{id}")
+            .buildAndExpand(createdCustomer.getId())
+            .toUri();
+
+    return ResponseEntity.created(location).body(createdCustomer);
   }
 
   @GetMapping("/{cpf}")
@@ -34,9 +44,10 @@ public class CustomerController {
 
   @PutMapping("/{cpf}")
   public ResponseEntity<Customer> update(
-      final @PathVariable String cpf, final @RequestBody @Valid Customer customer) {
+      final @PathVariable String cpf,
+      final @RequestBody @Valid UpdateCustomerRequest updateCustomerRequest) {
 
-    return ResponseEntity.ok(updateCustomer.execute(cpf, customer));
+    return ResponseEntity.ok(updateCustomer.execute(cpf, updateCustomerRequest));
   }
 
   @DeleteMapping("/{cpf}")

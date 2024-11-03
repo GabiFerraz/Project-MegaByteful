@@ -1,7 +1,6 @@
 package com.megabyteful.application.usecase;
 
-import static com.megabyteful.application.usecase.fixture.CustomerTestFixture.customerToUpdate;
-import static com.megabyteful.application.usecase.fixture.CustomerTestFixture.validCustomer;
+import static com.megabyteful.application.usecase.fixture.CustomerTestFixture.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.ArgumentCaptor.forClass;
@@ -26,19 +25,20 @@ class UpdateCustomerTest {
   @Test
   void shouldUpdateCustomerSuccessfully() {
     final var cpf = "12345678901";
-    final var request = customerToUpdate();
-    final var customerFoundRespGateway = validCustomer();
-    final var customerUpdated = customerToUpdate();
+    final var request = customerUpdateRequest();
+    final var customerFoundRespGateway = validCustomerResponse();
+    final var customerUpdatedRespGateway = validUpdatedCustomerResponse();
 
     when(customerGateway.findByCpf(cpf)).thenReturn(Optional.of(customerFoundRespGateway));
-    when(customerGateway.update(any(Customer.class))).thenReturn(customerUpdated);
+    when(customerGateway.update(any(Customer.class))).thenReturn(customerUpdatedRespGateway);
 
-    final var updatedCustomer = updateCustomer.execute(cpf, request);
+    final var responseUsecase = updateCustomer.execute(cpf, request);
 
-    assertThat(updatedCustomer.getName()).isEqualTo(customerUpdated.getName());
-    assertThat(updatedCustomer.getCpf()).isEqualTo(customerUpdated.getCpf());
-    assertThat(updatedCustomer.getPhone()).isEqualTo(customerUpdated.getPhone());
-    assertThat(updatedCustomer.getEmail()).isEqualTo(customerUpdated.getEmail());
+    assertThat(responseUsecase.getId()).isEqualTo(customerUpdatedRespGateway.getId());
+    assertThat(responseUsecase.getName()).isEqualTo(customerUpdatedRespGateway.getName());
+    assertThat(responseUsecase.getCpf()).isEqualTo(customerUpdatedRespGateway.getCpf());
+    assertThat(responseUsecase.getPhone()).isEqualTo(customerUpdatedRespGateway.getPhone());
+    assertThat(responseUsecase.getEmail()).isEqualTo(customerUpdatedRespGateway.getEmail());
 
     verify(customerGateway).findByCpf(cpf);
 
@@ -46,8 +46,9 @@ class UpdateCustomerTest {
 
     verify(customerGateway).update(captorCustomer.capture());
 
+    assertThat(captorCustomer.getValue().getId()).isEqualTo(customerFoundRespGateway.getId());
     assertThat(captorCustomer.getValue().getName()).isEqualTo(request.getName());
-    assertThat(captorCustomer.getValue().getCpf()).isEqualTo(request.getCpf());
+    assertThat(captorCustomer.getValue().getCpf()).isEqualTo(customerUpdatedRespGateway.getCpf());
     assertThat(captorCustomer.getValue().getPhone()).isEqualTo(request.getPhone());
     assertThat(captorCustomer.getValue().getEmail()).isEqualTo(request.getEmail());
   }
@@ -55,7 +56,7 @@ class UpdateCustomerTest {
   @Test
   void shouldNotUpdateCustomerWhenCpfDoesNotExist() {
     final var cpf = "12345678901";
-    final var request = customerToUpdate();
+    final var request = customerUpdateRequest();
 
     when(customerGateway.findByCpf(cpf)).thenReturn(Optional.empty());
 
