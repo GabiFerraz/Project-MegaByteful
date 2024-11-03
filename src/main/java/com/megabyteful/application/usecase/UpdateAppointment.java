@@ -16,7 +16,7 @@ public class UpdateAppointment {
         gateway.findById(id).orElseThrow(() -> new AppointmentNotFoundException(id));
 
     appointmentFound.setScheduleId(appointment.getScheduleId());
-    appointmentFound.setServiceProviderID(appointment.getServiceProviderID());
+    appointmentFound.setServiceProviderId(appointment.getServiceProviderId());
     appointmentFound.setCustomerId(appointment.getCustomerId());
 
     return gateway.update(appointmentFound);

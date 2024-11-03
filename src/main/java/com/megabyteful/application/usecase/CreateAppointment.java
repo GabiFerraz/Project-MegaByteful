@@ -25,7 +25,7 @@ public class CreateAppointment {
             appointmentDomain.getId(),
             appointmentDomain.getScheduleId(),
             appointmentDomain.getCustomerId(),
-            appointmentDomain.getServiceProviderID());
+            appointmentDomain.getServiceProviderId());
 
     return gateway.save(buildDomain);
   }

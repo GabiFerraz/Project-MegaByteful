@@ -22,7 +22,7 @@ public class AppointmentGatewayImpl implements AppointmentGateway {
             .id(appointment.getId())
             .customerId(appointment.getCustomerId())
             .scheduleId(appointment.getScheduleId())
-            .serviceProviderID(appointment.getServiceProviderID())
+            .serviceProviderID(appointment.getServiceProviderId())
             .build();
 
     final var saved = appointmentRepository.save(entity);
@@ -47,7 +47,7 @@ public class AppointmentGatewayImpl implements AppointmentGateway {
             .id(appointmentFound.getId())
             .scheduleId(appointment.getScheduleId())
             .customerId(appointment.getCustomerId())
-            .serviceProviderID(appointment.getServiceProviderID())
+            .serviceProviderID(appointment.getServiceProviderId())
             .build();
 
     final var updated = appointmentRepository.save(newEntity);
