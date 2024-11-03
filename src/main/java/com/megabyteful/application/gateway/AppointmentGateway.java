@@ -9,7 +9,8 @@ public interface AppointmentGateway {
 
   Optional<Appointment> findById(final int id);
 
-  Appointment updateAppointment(final Appointment appointment);
+  Appointment update(final Appointment appointment);
 
   void delete(final int id);
+  ;
 }

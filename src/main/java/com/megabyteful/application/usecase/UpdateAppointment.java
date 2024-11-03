@@ -19,6 +19,6 @@ public class UpdateAppointment {
     appointmentFound.setServiceProviderID(appointment.getServiceProviderID());
     appointmentFound.setCustomerId(appointment.getCustomerId());
 
-    return gateway.updateAppointment(appointmentFound);
+    return gateway.update(appointmentFound);
   }
 }
