@@ -1,23 +1,17 @@
-package com.megabyteful.application.domain;
+package com.megabyteful.application.dto;
 
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @Builder
-public class Service {
+public class UpdateServiceRequest {
 	
-	private Integer id;
+	@NotBlank(message = "A ServiceProvider is required")
 	private Integer idServiceProvider;
 	
 	@NotBlank(message = "Name is required")
@@ -28,9 +22,5 @@ public class Service {
 	@NotBlank(message = "Price is required")
 	@Digits(integer = 10, fraction = 2, message = "Price must be a valid monetary amount with up to 10 digits and 2 decimal places")
 	private Double price;
- 
-	public static Service createService(final Integer idServiceProvider, final String name, final Double price) {
-		return new Service(null,idServiceProvider,name,price);
-	}
 
 }
