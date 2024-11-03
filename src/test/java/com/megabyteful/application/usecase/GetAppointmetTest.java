@@ -28,8 +28,8 @@ public class GetAppointmetTest {
 
     assertThat(appointmentFound.getId()).isEqualTo(responseGateway.getId());
     assertThat(appointmentFound.getScheduleId()).isEqualTo(responseGateway.getScheduleId());
-    assertThat(appointmentFound.getServiceProviderID())
-        .isEqualTo(responseGateway.getServiceProviderID());
+    assertThat(appointmentFound.getServiceProviderId())
+        .isEqualTo(responseGateway.getServiceProviderId());
     assertThat(appointmentFound.getCustomerId()).isEqualTo(responseGateway.getCustomerId());
 
     verify(appointmentGateway).findById(id);

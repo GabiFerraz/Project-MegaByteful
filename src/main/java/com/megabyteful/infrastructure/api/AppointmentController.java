@@ -3,12 +3,11 @@ package com.megabyteful.infrastructure.api;
 import com.megabyteful.application.domain.Appointment;
 import com.megabyteful.application.usecase.*;
 import jakarta.validation.Valid;
+import java.net.URI;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,18 +27,18 @@ public class AppointmentController {
 
   @PostMapping("/createAppointment")
   public ResponseEntity<Appointment> createAppointment(
-          final @RequestBody @Valid Appointment appointment) {
+      final @RequestBody @Valid Appointment appointment) {
 
     final var createdAppointment = createAppointment.execute(appointment);
 
-    URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+    URI location =
+        ServletUriComponentsBuilder.fromCurrentRequest()
             .path("/{id}")
             .buildAndExpand(createdAppointment.getId())
             .toUri();
 
     return ResponseEntity.created(location).body(createdAppointment);
   }
-
 
   @PutMapping("/{id}")
   public ResponseEntity<Appointment> updateAppointment(

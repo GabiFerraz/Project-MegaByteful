@@ -35,8 +35,8 @@ class CreateAppointmentTest {
     assertThat(createdAppointment.getId()).isEqualTo(appointmentRequest.getId());
     assertThat(createdAppointment.getCustomerId()).isEqualTo(appointmentRequest.getCustomerId());
     assertThat(createdAppointment.getScheduleId()).isEqualTo(appointmentRequest.getScheduleId());
-    assertThat(createdAppointment.getServiceProviderID())
-        .isEqualTo(appointmentRequest.getServiceProviderID());
+    assertThat(createdAppointment.getServiceProviderId())
+        .isEqualTo(appointmentRequest.getServiceProviderId());
 
     verify(appointmentGateway).findById(any());
 
@@ -49,8 +49,8 @@ class CreateAppointmentTest {
         .isEqualTo(appointmentRequest.getCustomerId());
     assertThat(captorAppointment.getValue().getScheduleId())
         .isEqualTo(appointmentRequest.getScheduleId());
-    assertThat(captorAppointment.getValue().getServiceProviderID())
-        .isEqualTo(appointmentRequest.getServiceProviderID());
+    assertThat(captorAppointment.getValue().getServiceProviderId())
+        .isEqualTo(appointmentRequest.getServiceProviderId());
   }
 
   @Test

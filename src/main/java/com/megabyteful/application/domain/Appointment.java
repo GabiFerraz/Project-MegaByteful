@@ -21,7 +21,7 @@ public class Appointment {
   private int serviceProviderId;
 
   public static Appointment createAppointment(
-          final int id, int scheduleId, int customerId, final int serviceProviderID) {
+      final int id, int scheduleId, int customerId, final int serviceProviderID) {
 
     return new Appointment(id, scheduleId, customerId, serviceProviderID);
   }
