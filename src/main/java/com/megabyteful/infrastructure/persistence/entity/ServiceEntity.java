@@ -1,12 +1,6 @@
 package com.megabyteful.infrastructure.persistence.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,4 +29,7 @@ public class ServiceEntity {
 
   @OneToMany(mappedBy = "service")
   private List<ScheduleEntity> schedules;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  private ServiceProviderEntity serviceProvider;
 }
