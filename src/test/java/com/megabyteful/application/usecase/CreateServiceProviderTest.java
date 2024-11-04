@@ -2,7 +2,6 @@ package com.megabyteful.application.usecase;
 
 import static com.megabyteful.application.usecase.fixture.ServiceProviderTestFixture.validServiceProviderRequest;
 import static com.megabyteful.application.usecase.fixture.ServiceProviderTestFixture.validServiceProviderResponse;
-
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.ArgumentCaptor.forClass;
@@ -15,7 +14,6 @@ import static org.mockito.Mockito.when;
 import com.megabyteful.application.domain.ServiceProvider;
 import com.megabyteful.application.gateway.ServiceProviderGateway;
 import com.megabyteful.application.usecase.exception.ServiceProviderAlreadyExistsException;
-
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -23,10 +21,11 @@ import org.mockito.ArgumentCaptor;
 class CreateServiceProviderTest {
 
   private final ServiceProviderGateway serviceProviderGateway = mock(ServiceProviderGateway.class);
-  private final CreateServiceProvider createServiceProvider = new CreateServiceProvider(serviceProviderGateway);
-  
+  private final CreateServiceProvider createServiceProvider =
+      new CreateServiceProvider(serviceProviderGateway);
+
   @Test
-    void shouldCreateServiceProviderSuccessfuly() {
+  void shouldCreateServiceProviderSuccessfuly() {
     final var request = validServiceProviderRequest();
     final var gatewayResponse = validServiceProviderResponse();
 
@@ -58,8 +57,8 @@ class CreateServiceProviderTest {
 
   @Test
   void shouldNotCreateCustomerWhenCpfAlreadyExists() {
-	  final var request = validServiceProviderRequest();
-	  final var gatewayResponse = validServiceProviderResponse();
+    final var request = validServiceProviderRequest();
+    final var gatewayResponse = validServiceProviderResponse();
 
     when(serviceProviderGateway.findByDocument(request.getDocument()))
         .thenReturn(Optional.of(gatewayResponse));

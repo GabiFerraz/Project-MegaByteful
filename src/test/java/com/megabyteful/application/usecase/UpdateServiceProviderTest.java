@@ -20,7 +20,8 @@ import org.mockito.ArgumentCaptor;
 class UpdateCustomerTest {
 
   private final ServiceProviderGateway serviceProviderGateway = mock(ServiceProviderGateway.class);
-  private final UpdateServiceProvider updateServiceProvider = new UpdateServiceProvider(serviceProviderGateway);
+  private final UpdateServiceProvider updateServiceProvider =
+      new UpdateServiceProvider(serviceProviderGateway);
 
   @Test
   void shouldUpdateServiceProviderSuccessfully() {
@@ -29,30 +30,38 @@ class UpdateCustomerTest {
     final var serviceProviderFoundRespGateway = validServiceProviderResponse();
     final var serviceProviderUpdatedRespGateway = validUpdateServiceProviderResponse();
 
-    when(serviceProviderGateway.findByDocument(document)).thenReturn(Optional.of(serviceProviderFoundRespGateway));
-    when(serviceProviderGateway.update(any(ServiceProvider.class))).thenReturn(serviceProviderUpdatedRespGateway);
+    when(serviceProviderGateway.findByDocument(document))
+        .thenReturn(Optional.of(serviceProviderFoundRespGateway));
+    when(serviceProviderGateway.update(any(ServiceProvider.class)))
+        .thenReturn(serviceProviderUpdatedRespGateway);
 
     final var responseUsecase = updateServiceProvider.execute(document, request);
 
     assertThat(responseUsecase.getId()).isEqualTo(serviceProviderUpdatedRespGateway.getId());
     assertThat(responseUsecase.getName()).isEqualTo(serviceProviderUpdatedRespGateway.getName());
-    assertThat(responseUsecase.getDocument()).isEqualTo(serviceProviderUpdatedRespGateway.getDocument());
+    assertThat(responseUsecase.getDocument())
+        .isEqualTo(serviceProviderUpdatedRespGateway.getDocument());
     assertThat(responseUsecase.getPhone()).isEqualTo(serviceProviderUpdatedRespGateway.getPhone());
-    assertThat(responseUsecase.getBeautyServices()).isEqualTo(serviceProviderUpdatedRespGateway.getBeautyServices());
-    assertThat(responseUsecase.getAddress()).isEqualTo(serviceProviderUpdatedRespGateway.getAddress());
+    assertThat(responseUsecase.getBeautyServices())
+        .isEqualTo(serviceProviderUpdatedRespGateway.getBeautyServices());
+    assertThat(responseUsecase.getAddress())
+        .isEqualTo(serviceProviderUpdatedRespGateway.getAddress());
     assertThat(responseUsecase.getEmail()).isEqualTo(serviceProviderUpdatedRespGateway.getEmail());
-    
+
     verify(serviceProviderGateway).findByDocument(document);
 
     ArgumentCaptor<ServiceProvider> captorCustomer = forClass(ServiceProvider.class);
 
     verify(serviceProviderGateway).update(captorCustomer.capture());
 
-    assertThat(captorCustomer.getValue().getId()).isEqualTo(serviceProviderFoundRespGateway.getId());
+    assertThat(captorCustomer.getValue().getId())
+        .isEqualTo(serviceProviderFoundRespGateway.getId());
     assertThat(captorCustomer.getValue().getName()).isEqualTo(request.getName());
-    assertThat(captorCustomer.getValue().getDocument()).isEqualTo(serviceProviderUpdatedRespGateway.getDocument());
+    assertThat(captorCustomer.getValue().getDocument())
+        .isEqualTo(serviceProviderUpdatedRespGateway.getDocument());
     assertThat(captorCustomer.getValue().getPhone()).isEqualTo(request.getPhone());
-    assertThat(captorCustomer.getValue().getBeautyServices()).isEqualTo(request.getBeautyServices());
+    assertThat(captorCustomer.getValue().getBeautyServices())
+        .isEqualTo(request.getBeautyServices());
     assertThat(captorCustomer.getValue().getAddress()).isEqualTo(request.getAddress());
     assertThat(captorCustomer.getValue().getEmail()).isEqualTo(request.getEmail());
   }
