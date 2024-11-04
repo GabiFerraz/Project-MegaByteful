@@ -1,0 +1,69 @@
+package com.megabyteful.infrastructure.gateway;
+
+import com.megabyteful.application.domain.Customer;
+import com.megabyteful.application.gateway.CustomerGateway;
+import com.megabyteful.application.usecase.exception.CustomerNotFoundException;
+import com.megabyteful.infrastructure.persistence.entity.CustomerEntity;
+import com.megabyteful.infrastructure.persistence.repository.CustomerRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+
+import java.util.Optional;
+
+@Component
+@RequiredArgsConstructor
+public class CustomerGatewayImpl implements CustomerGateway {
+
+    private final CustomerRepository customerRepository;
+
+    @Override
+    public Customer save(final Customer customer) {
+        final var entity = CustomerEntity.builder()
+                .name(customer.getName())
+                .cpf(customer.getCpf())
+                .phone(customer.getPhone())
+                .email(customer.getEmail())
+                .build();
+
+        final var saved = customerRepository.save(entity);
+
+        return this.toResponse(saved);
+    }
+
+    @Override
+    public Optional<Customer> findByCpf(final String cpf) {
+        return customerRepository.findByCpf(cpf)
+                .map(this::toResponse);
+    }
+
+    @Override
+    public Customer update(final Customer customer) {
+        final var customerFound = customerRepository.findByCpf(customer.getCpf())
+                .orElseThrow(() -> new CustomerNotFoundException(customer.getCpf()));
+
+        final var newEntity = CustomerEntity.builder()
+                .id(customerFound.getId())
+                .name(customer.getName())
+                .cpf(customer.getCpf())
+                .phone(customer.getPhone())
+                .email(customer.getEmail())
+                .build();
+
+        final var updated = customerRepository.save(newEntity);
+
+        return this.toResponse(updated);
+    }
+
+    @Override
+    public void delete(final String cpf) {
+        customerRepository.deleteByCpf(cpf);
+    }
+
+    private Customer toResponse(final CustomerEntity entity) {
+        return new Customer(
+                entity.getName(),
+                entity.getCpf(),
+                entity.getPhone(),
+                entity.getEmail());
+    }
+}

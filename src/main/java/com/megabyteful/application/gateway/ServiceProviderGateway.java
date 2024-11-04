@@ -13,5 +13,5 @@ public interface ServiceProviderGateway {
 	ServiceProvider update(ServiceProvider serviceProvider);
 	
 	void delete(String document);
-
+	
 }

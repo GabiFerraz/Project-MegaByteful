@@ -25,7 +25,7 @@ public class CreateServiceProvider {
 		final var buildDomain = ServiceProvider.createServiceProvider(request.getName(),
 				request.getDocument(), request.getPhone(),
 				request.getBeautyServices(), request.getAddress(),
-				request.getEmail());
+				request.getEmail(), request.getServices());
 
 		return gateway.save(buildDomain);
 	}
