@@ -19,7 +19,7 @@ public class ServiceProviderEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer id;
+  private int id;
 
   @Column(name = "name")
   private String name;
@@ -39,6 +39,6 @@ public class ServiceProviderEntity {
   @Column(name = "email")
   private String email;
 
-  @OneToMany(mappedBy = "serviceProvider")
+  @OneToMany(mappedBy = "serviceProvider", fetch = FetchType.LAZY)
   private List<ServiceEntity> services;
 }

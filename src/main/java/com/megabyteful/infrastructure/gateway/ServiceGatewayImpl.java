@@ -11,7 +11,6 @@ import com.megabyteful.infrastructure.persistence.entity.AppointmentEntity;
 import com.megabyteful.infrastructure.persistence.entity.ScheduleEntity;
 import com.megabyteful.infrastructure.persistence.entity.ServiceEntity;
 import com.megabyteful.infrastructure.persistence.entity.ServiceProviderEntity;
-import com.megabyteful.infrastructure.persistence.repository.ScheduleRepository;
 import com.megabyteful.infrastructure.persistence.repository.ServiceProviderRepository;
 import com.megabyteful.infrastructure.persistence.repository.ServiceRepository;
 import java.util.List;
@@ -26,7 +25,6 @@ public class ServiceGatewayImpl implements ServiceGateway {
 
   private final ServiceRepository serviceRepository;
   private final ServiceProviderRepository serviceProviderRepository;
-  private final ScheduleRepository scheduleRepository;
 
   @Override
   public Service save(final Service request) {
@@ -91,7 +89,7 @@ public class ServiceGatewayImpl implements ServiceGateway {
         entity.getName(),
         entity.getPrice(),
         this.toScheduleDomain(entity.getSchedules()),
-        this.toServiceProviderDomain(entity.getServiceProvider()));
+        this.toSimpleServiceProviderDomain(entity.getServiceProvider()));
   }
 
   private List<Schedule> toScheduleDomain(List<ScheduleEntity> scheduleEntities) {
@@ -119,7 +117,7 @@ public class ServiceGatewayImpl implements ServiceGateway {
         .toList();
   }
 
-  private ServiceProvider toServiceProviderDomain(final ServiceProviderEntity entity) {
+  private ServiceProvider toSimpleServiceProviderDomain(final ServiceProviderEntity entity) {
     return new ServiceProvider(
         entity.getId(),
         entity.getName(),
@@ -128,10 +126,6 @@ public class ServiceGatewayImpl implements ServiceGateway {
         entity.getBeautyServices(),
         entity.getAddress(),
         entity.getEmail(),
-        this.toServicesDomain(entity.getServices()));
-  }
-
-  private List<Service> toServicesDomain(List<ServiceEntity> serviceEntities) {
-    return serviceEntities.stream().map(this::toResponse).toList();
+        List.of()); // Omit services to break the recursion
   }
 }
