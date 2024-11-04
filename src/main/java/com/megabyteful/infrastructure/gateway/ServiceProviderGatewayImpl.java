@@ -77,7 +77,7 @@ public class ServiceProviderGatewayImpl implements ServiceProviderGateway {
 							serviceEntity.getName(),
 							serviceEntity.getPrice(), 
 							serviceEntity.getSchedules(),
-							serviceEntity.getServiceProvider().getId()))
+							serviceEntity.getServiceProvider()))
 				.toList();
 	}
 

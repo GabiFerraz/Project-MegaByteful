@@ -6,12 +6,12 @@ import com.megabyteful.application.domain.ServiceProvider;
 
 public interface ServiceProviderGateway {
 	
-	ServiceProvider save(ServiceProvider serviceProvider);
+	ServiceProvider save(final ServiceProvider serviceProvider);
 	
-	Optional<ServiceProvider> findByDocument(String document);
+	Optional<ServiceProvider> findByDocument(final String document);
 	
-	ServiceProvider update(ServiceProvider serviceProvider);
+	ServiceProvider update(final ServiceProvider serviceProvider);
 	
-	void delete(String document);
+	void delete(final String document);
 	
 }

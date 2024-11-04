@@ -15,6 +15,7 @@ public class DeleteServiceProvider {
 	
 	public void execute(final String document) {
 		final var serviceProvider = gateway.findByDocument(document).orElseThrow(()-> new ServiceProviderNotFoundException(document));
+		
 		gateway.delete(serviceProvider.getDocument());
 	}
 }
