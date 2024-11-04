@@ -31,5 +31,6 @@ public class ServiceEntity {
   private List<ScheduleEntity> schedules;
 
   @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "service_provider_id", nullable = false)
   private ServiceProviderEntity serviceProvider;
 }
