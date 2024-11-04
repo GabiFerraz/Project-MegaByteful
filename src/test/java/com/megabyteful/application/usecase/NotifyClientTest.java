@@ -1,4 +1,3 @@
 package com.megabyteful.application.usecase;
 
-public class NotifyClientTest {
-}
+public class NotifyClientTest {}

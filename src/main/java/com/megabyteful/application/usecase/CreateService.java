@@ -16,15 +16,14 @@ public class CreateService {
 	
 	public Service execute(final Service request) {
 		
-		//validando se existe um ServiceProvider
-		final var service = gateway.findByNameAndIdProviderService(request.getName(),request.getIdServiceProvider()); 
+		final var service = gateway.findByNameAndIdProviderService(request.getName(),request.getServiceProvider().getId()); 
 		
 	    if (service.isPresent()) {
 	      throw new ServiceAlreadyExistsException();
 	    }
 
 	    final var buildDomain =
-	        Service.createService(request.getIdServiceProvider(), request.getName(), request.getPrice());
+	        Service.createService(request.getName(),request.getPrice(),request.getSchedules(),request.getServiceProvider() );
 
 	    return gateway.save(buildDomain);
 	  }

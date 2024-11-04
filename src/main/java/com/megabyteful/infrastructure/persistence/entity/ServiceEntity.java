@@ -1,11 +1,7 @@
 package com.megabyteful.infrastructure.persistence.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,15 +19,17 @@ public class ServiceEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int id;
+  private Integer id;
 
-  @Column(name = "idProviderService", nullable = false)
-  private Integer idProviderService;
-  
-  @Column(name = "name", nullable = false, length = 100)
+  @Column(name = "name")
   private String name;
 
-  @Column(name = "price", nullable = false)
+  @Column(name = "price")
   private Double price;
-	
+
+  @OneToMany(mappedBy = "service")
+  private List<ScheduleEntity> schedules;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  private ServiceProviderEntity serviceProvider;
 }

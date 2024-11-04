@@ -21,7 +21,6 @@ public class UpdateService {
 
 	    serviceFound.setName(updateServiceRequest.getName());
 	    serviceFound.setPrice(updateServiceRequest.getPrice());
-	    serviceFound.setIdServiceProvider(updateServiceRequest.getIdServiceProvider());
 
 	    return gateway.update(serviceFound);
 	  }

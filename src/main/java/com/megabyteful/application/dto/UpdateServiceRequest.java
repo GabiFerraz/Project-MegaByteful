@@ -11,8 +11,6 @@ import lombok.Getter;
 @Builder
 public class UpdateServiceRequest {
 	
-	@NotBlank(message = "A ServiceProvider is required")
-	private Integer idServiceProvider;
 	
 	@NotBlank(message = "Name is required")
 	@Size(max = 100, message = "Name length must be less than 100 characters")

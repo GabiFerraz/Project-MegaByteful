@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
+<<<<<<< HEAD
 @RequiredArgsConstructor
 @RequestMapping("/megabyteful/services")
 public class ServiceController {
@@ -59,3 +60,7 @@ public class ServiceController {
     return ResponseEntity.noContent().build();
   }
 }
+=======
+@RequestMapping("/api/services")
+public class ServiceController {}
+>>>>>>> a283ff667951951f936e4fa5379dfa01f4b06855

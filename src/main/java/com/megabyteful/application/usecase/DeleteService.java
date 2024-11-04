@@ -16,7 +16,7 @@ public class DeleteService {
 	
 	public void execute(final String name, final Integer idProviderService) throws ServiceNotFoundException {
 		final var service = gateway.findByNameAndIdProviderService(name, idProviderService).orElseThrow(() -> new ServiceNotFoundException());
-		gateway.delete(service.getName(),service.getIdServiceProvider());
+		gateway.delete(service.getName(),service.getServiceProvider().getId());
 	}
 
 }
