@@ -33,7 +33,7 @@ public class ServiceGatewayImpl implements ServiceGateway {
         serviceProviderRepository.findById(request.getServiceProvider().getId());
 
     if (serviceProviderFound.isEmpty()) {
-      throw new ServiceProviderNotFoundException(request.getServiceProvider().getId());
+      throw new ServiceProviderNotFoundException(request.getServiceProvider().getDocument());
     }
 
     final var serviceProvider = serviceProviderFound.get();
