@@ -39,6 +39,6 @@ public class ServiceProviderEntity {
   @Column(name = "email")
   private String email;
 
-  @OneToMany(mappedBy = "service_provider")
+  @OneToMany(mappedBy = "serviceProvider")
   private List<ServiceEntity> services;
 }

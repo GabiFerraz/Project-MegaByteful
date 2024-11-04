@@ -7,16 +7,12 @@ import com.megabyteful.application.usecase.DeleteService;
 import com.megabyteful.application.usecase.GetService;
 import com.megabyteful.application.usecase.UpdateService;
 import java.net.URI;
-
-import javax.management.ServiceNotFoundException;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
-<<<<<<< HEAD
 @RequiredArgsConstructor
 @RequestMapping("/megabyteful/services")
 public class ServiceController {
@@ -39,28 +35,23 @@ public class ServiceController {
     return ResponseEntity.created(location).body(createdService);
   }
 
-  @GetMapping("/{name}/{idProviderService}") 
-  public ResponseEntity<Service> findByNameAndIdProviderService(final @PathVariable String name, final @PathVariable Integer idProviderService) throws ServiceNotFoundException {  	  
-    return ResponseEntity.ok(getService.execute(name,idProviderService));
+  @GetMapping("/{id}")
+  public ResponseEntity<Service> findById(final @PathVariable int id) {
+
+    return ResponseEntity.ok(getService.execute(id));
   }
 
-  @PutMapping("/{name}/{idProviderService}")
+  @PutMapping("/{id}")
   public ResponseEntity<Service> update(
-      final @PathVariable String name,
-      final @PathVariable Integer idProviderService,
-      final @RequestBody UpdateServiceRequest updateServiceRequest) throws ServiceNotFoundException {
+      final @PathVariable int id, final @RequestBody UpdateServiceRequest updateServiceRequest) {
 
-    return ResponseEntity.ok(updateService.execute(name, idProviderService, updateServiceRequest));
+    return ResponseEntity.ok(updateService.execute(id, updateServiceRequest));
   }
 
-  @DeleteMapping("/{name}/{idProviderService}")
-  public ResponseEntity<Integer> delete(final @PathVariable String name,final @PathVariable Integer idProviderService) throws ServiceNotFoundException {
-    deleteService.execute(name,idProviderService);
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Void> delete(final @PathVariable int id) {
+    deleteService.execute(id);
 
     return ResponseEntity.noContent().build();
   }
 }
-=======
-@RequestMapping("/api/services")
-public class ServiceController {}
->>>>>>> a283ff667951951f936e4fa5379dfa01f4b06855
