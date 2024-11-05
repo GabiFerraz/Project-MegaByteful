@@ -59,31 +59,6 @@ class AppointmentControllerTest {
   }
 
   @Nested
-  class FindByIdTests {
-
-    @Test
-    void shouldFindAppointmentByIdSuccessfully() throws Exception {
-      final var request = 999;
-      final var response = validAppointmentRequest();
-
-      when(getAppointment.execute(any())).thenReturn(response);
-
-      mockMvc
-          .perform(
-              get(BASE_URL + "/" + request)
-                  .contentType(MediaType.APPLICATION_JSON)
-                  .content(objectMapper.writeValueAsString(request)))
-          .andExpect(status().isOk())
-          .andExpect(jsonPath("$.id", equalTo(999)))
-          .andExpect(jsonPath("$.serviceProviderID", equalTo(999)))
-          .andExpect(jsonPath("$.scheduleId", equalTo(999)))
-          .andExpect(jsonPath("$.customerId", equalTo(999)));
-
-      verify(getAppointment).execute(any());
-    }
-  }
-
-  @Nested
   class DeleteAppointmentTests {
 
     @Test

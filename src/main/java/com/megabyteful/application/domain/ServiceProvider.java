@@ -59,4 +59,15 @@ public class ServiceProvider {
     return new ServiceProvider(
         null, name, document, phone, beautyServices, address, email, services);
   }
+  
+	public ServiceProvider(Integer id, String name, String document, String phone, String beautyServices,
+			String address, String email) {
+		this.id = id;
+		this.name = name;
+		this.document = document;
+		this.phone = phone;
+		this.beautyServices = beautyServices;
+		this.address = address;
+		this.email = email;
+	}
 }

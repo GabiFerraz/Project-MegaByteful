@@ -17,7 +17,7 @@ import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
-class UpdateCustomerTest {
+class ServiceProviderTest {
 
   private final ServiceProviderGateway serviceProviderGateway = mock(ServiceProviderGateway.class);
   private final UpdateServiceProvider updateServiceProvider =
