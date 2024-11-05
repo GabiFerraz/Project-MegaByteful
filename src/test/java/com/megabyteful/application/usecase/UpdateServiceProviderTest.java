@@ -75,7 +75,7 @@ class ServiceProviderTest {
 
     assertThatThrownBy(() -> updateServiceProvider.execute(document, request))
         .isInstanceOf(ServiceProviderNotFoundException.class)
-        .hasMessage("Service Provider with CPF [12345678900] not found.");
+        .hasMessage("Service Provider with document [12345678900] not found.");
 
     verify(serviceProviderGateway).findByDocument(document);
     verify(serviceProviderGateway, never()).update(any());

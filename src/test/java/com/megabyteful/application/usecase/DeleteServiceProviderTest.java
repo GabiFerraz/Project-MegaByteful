@@ -41,7 +41,7 @@ public class DeleteServiceProviderTest {
 
     assertThatThrownBy(() -> deleteServiceProvider.execute(document))
         .isInstanceOf(ServiceProviderNotFoundException.class)
-        .hasMessage("Service Provider with Document [12345678900] not found.");
+        .hasMessage("Service Provider with document [12345678900] not found.");
 
     verify(serviceProviderGateway).findByDocument(document);
     verify(serviceProviderGateway, never()).delete(document);

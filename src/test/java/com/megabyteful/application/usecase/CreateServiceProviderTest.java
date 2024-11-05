@@ -65,7 +65,7 @@ class CreateServiceProviderTest {
 
     assertThatThrownBy(() -> createServiceProvider.execute(request))
         .isInstanceOf(ServiceProviderAlreadyExistsException.class)
-        .hasMessage("Service Provider [Maria Silva] with CPF [12345678900] already exists.");
+        .hasMessage("Service provider [Maria Silva] with document [12345678900] already exists.");
 
     verify(serviceProviderGateway).findByDocument(any());
     verify(serviceProviderGateway, never()).save(request);

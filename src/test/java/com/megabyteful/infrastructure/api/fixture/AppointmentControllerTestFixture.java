@@ -7,10 +7,9 @@ public class AppointmentControllerTestFixture {
 
   public static Appointment validAppointmentRequest() {
     return Appointment.builder()
-        .id(999)
-        .scheduleId(999)
-        .customerId(999)
-        .serviceTime(LocalDateTime.parse("2022-01-01T00:00:00"))
+        .scheduleId(1)
+        .customerId(1)
+        .serviceTime(LocalDateTime.parse("2024-11-10T15:00:00"))
         .build();
   }
 
@@ -19,7 +18,7 @@ public class AppointmentControllerTestFixture {
         .id(999)
         .scheduleId(999)
         .customerId(999)
-        .serviceTime(LocalDateTime.parse("2022-01-01T00:00:00"))
+        .serviceTime(LocalDateTime.parse("2024-11-10T15:00:00"))
         .build();
   }
 }

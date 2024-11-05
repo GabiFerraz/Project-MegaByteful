@@ -47,7 +47,7 @@ class GetServiceProviderTest {
 
     assertThatThrownBy(() -> getServiceProvider.execute(document))
         .isInstanceOf(ServiceProviderNotFoundException.class)
-        .hasMessage("Service Provider with Document [12345678900] not found.");
+        .hasMessage("Service Provider with document [12345678901] not found.");
 
     verify(serviceProviderGateway).findByDocument(document);
   }
