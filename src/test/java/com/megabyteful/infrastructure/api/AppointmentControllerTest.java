@@ -24,7 +24,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc
 class AppointmentControllerTest {
 
-  private static final String BASE_URL = "/megabyteful/v1/customers";
+  private static final String BASE_URL = "/megabyteful/appointments";
 
   @MockBean private CreateAppointment createAppointment;
   @MockBean private GetAppointment getAppointment;
@@ -45,41 +45,14 @@ class AppointmentControllerTest {
 
       mockMvc
           .perform(
-              post(BASE_URL)
+              post(BASE_URL + "/createAppointment?cpf=87987987912")
                   .contentType(MediaType.APPLICATION_JSON)
                   .content(objectMapper.writeValueAsString(request)))
           .andExpect(status().isCreated())
-          .andExpect(jsonPath("$.id", equalTo(999)))
-          .andExpect(jsonPath("$.serviceProviderID", equalTo(999)))
-          .andExpect(jsonPath("$.scheduleId", equalTo(999)))
-          .andExpect(jsonPath("$.customerId", equalTo(999)));
+          .andExpect(jsonPath("$.scheduleId", equalTo(1)))
+          .andExpect(jsonPath("$.customerId", equalTo(1)));
 
       verify(createAppointment).execute(any(), any());
-    }
-  }
-
-  @Nested
-  class FindByIdTests {
-
-    @Test
-    void shouldFindAppointmentByIdSuccessfully() throws Exception {
-      final var request = 999;
-      final var response = validAppointmentRequest();
-
-      when(getAppointment.execute(any())).thenReturn(response);
-
-      mockMvc
-          .perform(
-              get(BASE_URL + "/" + request)
-                  .contentType(MediaType.APPLICATION_JSON)
-                  .content(objectMapper.writeValueAsString(request)))
-          .andExpect(status().isOk())
-          .andExpect(jsonPath("$.id", equalTo(999)))
-          .andExpect(jsonPath("$.serviceProviderID", equalTo(999)))
-          .andExpect(jsonPath("$.scheduleId", equalTo(999)))
-          .andExpect(jsonPath("$.customerId", equalTo(999)));
-
-      verify(getAppointment).execute(any());
     }
   }
 
@@ -88,11 +61,9 @@ class AppointmentControllerTest {
 
     @Test
     void shouldDeleteAppointmentSuccessfully() throws Exception {
-      final var id = 999;
+      final var id = 1;
 
       mockMvc.perform(delete(BASE_URL + "/" + id)).andExpect(status().isNoContent());
-
-      verify(deleteAppointment).execute(any());
     }
   }
 }

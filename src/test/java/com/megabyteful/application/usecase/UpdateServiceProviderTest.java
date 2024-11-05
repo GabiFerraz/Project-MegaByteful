@@ -17,7 +17,7 @@ import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
-class UpdateCustomerTest {
+class UpdateServiceProviderTest {
 
   private final ServiceProviderGateway serviceProviderGateway = mock(ServiceProviderGateway.class);
   private final UpdateServiceProvider updateServiceProvider =
@@ -75,7 +75,7 @@ class UpdateCustomerTest {
 
     assertThatThrownBy(() -> updateServiceProvider.execute(document, request))
         .isInstanceOf(ServiceProviderNotFoundException.class)
-        .hasMessage("Service Provider with CPF [12345678900] not found.");
+        .hasMessage("Service Provider with document [12345678900] not found.");
 
     verify(serviceProviderGateway).findByDocument(document);
     verify(serviceProviderGateway, never()).update(any());
