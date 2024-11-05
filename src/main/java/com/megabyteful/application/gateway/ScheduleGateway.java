@@ -11,4 +11,6 @@ public interface ScheduleGateway {
   Optional<Schedule> findByServiceTime(final LocalDateTime serviceTime);
 
   Schedule update(final Schedule schedule);
+
+  void delete(final LocalDateTime serviceTime);
 }

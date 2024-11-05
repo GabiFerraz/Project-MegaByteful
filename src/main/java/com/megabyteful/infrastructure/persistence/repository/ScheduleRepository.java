@@ -8,4 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface ScheduleRepository extends JpaRepository<ScheduleEntity, Integer> {
 
   Optional<ScheduleEntity> findByServiceTime(final LocalDateTime serviceTime);
+
+  void deleteByServiceTime(final LocalDateTime serviceTime);
 }

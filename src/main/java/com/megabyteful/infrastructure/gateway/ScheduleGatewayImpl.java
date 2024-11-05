@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @RequiredArgsConstructor
@@ -73,6 +74,12 @@ public class ScheduleGatewayImpl implements ScheduleGateway {
     final var updated = scheduleRepository.save(scheduleEntity);
 
     return this.toResponse(updated);
+  }
+
+  @Transactional
+  @Override
+  public void delete(final LocalDateTime serviceTime) {
+    scheduleRepository.deleteByServiceTime(serviceTime);
   }
 
   private Schedule toResponse(final ScheduleEntity entity) {
