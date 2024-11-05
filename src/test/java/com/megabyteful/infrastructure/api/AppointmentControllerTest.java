@@ -19,7 +19,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -46,7 +45,7 @@ class AppointmentControllerTest {
 
       mockMvc
           .perform(
-              post(BASE_URL+"/createAppointment?cpf=87987987912")
+              post(BASE_URL + "/createAppointment?cpf=87987987912")
                   .contentType(MediaType.APPLICATION_JSON)
                   .content(objectMapper.writeValueAsString(request)))
           .andExpect(status().isCreated())
@@ -65,8 +64,6 @@ class AppointmentControllerTest {
       final var id = 1;
 
       mockMvc.perform(delete(BASE_URL + "/" + id)).andExpect(status().isNoContent());
-      
     }
   }
-    
 }
