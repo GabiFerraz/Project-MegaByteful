@@ -56,10 +56,10 @@ public class AppointmentController {
   }
 
   @PostMapping("/notificationAppointment")
-  public ResponseEntity<String> notificaCliente() {
+  public ResponseEntity<String> notificationClient() {
 
     System.out.println("notificação enviada");
 
-    return ResponseEntity.ok("Notificação enviada com sucesso");
+    return ResponseEntity.ok("Notification sent successfully");
   }
 }
